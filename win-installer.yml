@@ -1,0 +1,2 @@
+#ps1_sysnative
+Set-DnsClientServerAddress -InterfaceIndex 3 -ServerAddresses 161.26.0.7, 161.26.0.8;

@@ -40,9 +40,10 @@ resource "ibm_is_instance" "windows_instance" {
   resource_group = data.ibm_resource_group.cde_rg.id
   tags           = ["windows", var.vpc_name, var.zone]
 
-  vpc  = data.ibm_is_vpc.us_east_vpc.id
-  zone = var.zone
-  keys = [data.ibm_is_ssh_key.windows_key.id]
+  vpc       = data.ibm_is_vpc.us_east_vpc.id
+  zone      = var.zone
+  keys      = [data.ibm_is_ssh_key.windows_key.id]
+  user_data = file("${path.module}/win-installer.yml")
 }
 
 resource "ibm_is_floating_ip" "windows_floatingip" {

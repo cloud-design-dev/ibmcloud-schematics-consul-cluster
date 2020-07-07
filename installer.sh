@@ -85,3 +85,6 @@ chown --recursive consul:consul /opt/consul
 chown --recursive consul:consul /etc/consul.d
 chmod 640 /etc/consul.d/consul.hcl
 chmod 640 /etc/consul.d/server.hcl
+
+systemctl enable consul.service
+systemctl start consul.service
