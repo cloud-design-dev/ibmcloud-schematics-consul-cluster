@@ -1,7 +1,7 @@
 resource "ibm_is_instance" "consul_instance" {
   count   = var.instance_count
   name    = "c-srv-${count.index + 1}"
-  image   = var.default_image
+  image   = data.ibm_is_image.consul_image.id
   profile = var.default_instance_profile
 
   primary_network_interface {
@@ -30,7 +30,7 @@ resource "ibm_dns_resource_record" "consul_server_dns" {
 
 resource "ibm_is_instance" "windows_instance" {
   name    = "winserver2016"
-  image   = "ibm-windows-server-2016-full-standard-amd64-3"
+  image   = data.ibm_is_image.windows_image.id
   profile = var.default_instance_profile
 
   primary_network_interface {
@@ -40,9 +40,9 @@ resource "ibm_is_instance" "windows_instance" {
   resource_group = data.ibm_resource_group.cde_rg.id
   tags           = ["windows", var.vpc_name, var.zone]
 
-  vpc       = data.ibm_is_vpc.us_east_vpc.id
-  zone      = var.zone
-  keys      = [data.ibm_is_ssh_key.us_east_key.id]
+  vpc  = data.ibm_is_vpc.us_east_vpc.id
+  zone = var.zone
+  keys = [data.ibm_is_ssh_key.us_east_key.id]
 }
 
 resource "ibm_is_floating_ip" "windows_floatingip" {

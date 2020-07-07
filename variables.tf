@@ -4,10 +4,16 @@ variable "instance_count" {
   default     = "3"
 }
 
-variable "default_image" {
+variable "consul_image" {
   description = "Default operating system image for compute instance."
   type        = string
-  default     = "r014-ed3f775f-ad7e-4e37-ae62-7199b4988b00"
+  default     = "ibm-ubuntu-18-04-1-minimal-amd64-2"
+}
+
+variable "windows_image" {
+  description = "Default system image for Windows instance."
+  type        = string
+  default     = "ibm-windows-server-2016-full-standard-amd64-3"
 }
 
 variable "default_instance_profile" {
@@ -19,7 +25,7 @@ variable "default_instance_profile" {
 variable "ssh_key" {
   description = "VPC ssh key to add to compute instance."
   type        = string
-  default     = "hyperion-us-east"
+  default     = "`"
 }
 
 variable "resource_group_name" {
