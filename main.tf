@@ -44,3 +44,12 @@ resource "ibm_is_instance" "windows_instance" {
   zone      = var.zone
   keys      = [data.ibm_is_ssh_key.us_east_key.id]
 }
+
+resource "ibm_is_floating_ip" "windows_floatingip" {
+  name   = "winfip1"
+  target = ibm_is_instance.windows_instance.primary_network_interface.0.id
+}
+
+output "windows_floatingip" {
+  value = ibm_is_floating_ip.windows_floatingip.address
+}
