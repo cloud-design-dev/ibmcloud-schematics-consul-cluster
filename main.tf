@@ -13,7 +13,7 @@ resource "ibm_is_instance" "consul_instance" {
 
   vpc       = data.ibm_is_vpc.us_east_vpc.id
   zone      = var.zone
-  keys      = [data.ibm_is_ssh_key.us_east_key.id]
+  keys      = [data.ibm_is_ssh_key.linux_key.id]
   user_data = templatefile("${path.module}/installer.sh", { consul_version = var.consul_version, acl_token = var.acl_token, zone = var.zone, encrypt_key = var.encrypt_key })
 }
 
@@ -42,7 +42,7 @@ resource "ibm_is_instance" "windows_instance" {
 
   vpc  = data.ibm_is_vpc.us_east_vpc.id
   zone = var.zone
-  keys = [data.ibm_is_ssh_key.us_east_key.id]
+  keys = [data.ibm_is_ssh_key.windows_key.id]
 }
 
 resource "ibm_is_floating_ip" "windows_floatingip" {

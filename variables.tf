@@ -22,10 +22,16 @@ variable "default_instance_profile" {
   default     = "bx2-8x32"
 }
 
-variable "ssh_key" {
-  description = "VPC ssh key to add to compute instance."
+variable "linux_ssh_key" {
+  description = "VPC ssh key to add to linux compute instances."
   type        = string
-  default     = "`"
+  default     = ""
+}
+
+variable "windows_ssh_key" {
+  description = "VPC ssh key to add to windows compute instance."
+  type        = string
+  default     = ""
 }
 
 variable "resource_group_name" {
