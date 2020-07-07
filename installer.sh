@@ -22,9 +22,8 @@ dhclient -v -r; dhclient -v
 systemd-resolve --flush-caches
 
 ## Download and install Consul
-export CONSUL_VERSION="${consul_version}"
-curl --silent --remote-name https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip
-unzip consul_${CONSUL_VERSION}_linux_amd64.zip
+curl --silent --remote-name https://releases.hashicorp.com/consul/${consul_version}/consul_${consul_version}_linux_amd64.zip
+unzip consul_${consul_version}_linux_amd64.zip
 chown root:root consul
 mv consul /usr/local/bin/
 consul -autocomplete-install
