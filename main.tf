@@ -28,4 +28,19 @@ resource "ibm_dns_resource_record" "consul_server_dns" {
   rdata       = element(ibm_is_instance.consul_instance[*].primary_network_interface[0].primary_ipv4_address, count.index)
 }
 
+resource "ibm_is_instance" "windows_instance" {
+  name    = "winserver2016"
+  image   = "ibm-windows-server-2016-full-standard-amd64-3"
+  profile = var.default_instance_profile
 
+  primary_network_interface {
+    subnet = data.ibm_is_vpc.us_east_vpc.subnets[0].id
+  }
+
+  resource_group = data.ibm_resource_group.cde_rg.id
+  tags           = ["windows", var.vpc_name, var.zone]
+
+  vpc       = data.ibm_is_vpc.us_east_vpc.id
+  zone      = var.zone
+  keys      = [data.ibm_is_ssh_key.us_east_key.id]
+}
