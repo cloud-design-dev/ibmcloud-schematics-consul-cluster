@@ -12,9 +12,9 @@ resource "ibm_is_instance" "consul_instance" {
   tags           = ["consul", var.vpc_name, data.ibm_is_zones.regional_zones[0]]
 
   vpc       = data.ibm_is_vpc.us_east_vpc.id
-  zone      = data.ibm_is_zones.regional_zones[0]
+  zone      = data.ibm_is_zones.regional_zones.zones[0]
   keys      = [data.ibm_is_ssh_key.linux_key.id]
-  user_data = templatefile("${path.module}/installer.sh", { consul_version = var.consul_version, acl_token = var.acl_token, encrypt_key = var.encrypt_key, vpc_name = var.vpc_name, zone = data.ibm_is_zones.regional_zones[0] })
+  user_data = templatefile("${path.module}/installer.sh", { consul_version = var.consul_version, acl_token = var.acl_token, encrypt_key = var.encrypt_key, vpc_name = var.vpc_name, zone = data.ibm_is_zones.regional_zones.zones[0] })
 }
 
 
@@ -41,7 +41,7 @@ resource "ibm_is_instance" "windows_instance" {
   tags           = ["windows", var.vpc_name, var.zone]
 
   vpc       = data.ibm_is_vpc.us_east_vpc.id
-  zone      = data.ibm_is_zones.regional_zones[0]
+  zone      = data.ibm_is_zones.regional_zones.zones[0]
   keys      = [data.ibm_is_ssh_key.windows_key.id]
   user_data = file("${path.module}/win-installer.yml")
 }
