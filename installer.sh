@@ -62,7 +62,7 @@ cat >/etc/consul.d/consul.hcl <<EOL
 datacenter = "${zone}"
 data_dir = "/opt/consul"
 encrypt = "${encrypt_key}"
-bind_addr = `hostname -I`
+bind_addr = "`hostname -I`"
 retry_join = ["consul-server1.us-east.cde", "consul-server2.us-east.cde", "consul-server3.us-east.cde"]
 acl = {
     enabled = true,
