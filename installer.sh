@@ -88,3 +88,16 @@ chmod 640 /etc/consul.d/server.hcl
 
 systemctl enable consul.service
 systemctl start consul.service
+
+## Install LogDNA for easier troubleshooting
+echo "deb https://repo.logdna.com stable main" | tee /etc/apt/sources.list.d/logdna.list
+
+wget -O- https://repo.logdna.com/logdna.gpg | apt-key add -
+DEBIAN_FRONTEND=noninteractive apt -qqy update
+DEBIAN_FRONTEND=noninteractive apt -qqy install logdna-agent < "/dev/null"
+logdna-agent -k 613b640c3c290be2cf232c489c966a1d
+logdna-agent -s LOGDNA_APIHOST=api.us-south.logging.cloud.ibm.com
+logdna-agent -s LOGDNA_LOGHOST=logs.us-south.logging.cloud.ibm.com
+logdna-agent -t ${vpc_name},${zone}
+update-rc.d logdna-agent defaults
+/etc/init.d/logdna-agent start

@@ -81,3 +81,9 @@ variable "encrypt_key" {
   type        = string
   default     = ""
 }
+
+variable "region" {
+  description = "Region where resources will be deployed."
+  type        = string
+  default     = "us-east"
+}

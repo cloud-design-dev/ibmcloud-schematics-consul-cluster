@@ -23,3 +23,6 @@ data "ibm_is_ssh_key" "linux_key" {
   name = var.linux_ssh_key
 }
 
+data "ibm_is_zones" "regional_zones" {
+  region = var.region
+}

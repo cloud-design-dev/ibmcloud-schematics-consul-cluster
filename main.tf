@@ -1,6 +1,6 @@
 resource "ibm_is_instance" "consul_instance" {
   count   = var.instance_count
-  name    = "c-srv-${count.index + 1}"
+  name    = "consul-server${count.index + 1}"
   image   = data.ibm_is_image.consul_image.id
   profile = var.default_instance_profile
 
@@ -9,12 +9,12 @@ resource "ibm_is_instance" "consul_instance" {
   }
 
   resource_group = data.ibm_resource_group.cde_rg.id
-  tags           = ["consul", var.vpc_name, var.zone]
+  tags           = ["consul", var.vpc_name, data.ibm_is_zones.regional_zones[0]]
 
   vpc       = data.ibm_is_vpc.us_east_vpc.id
-  zone      = var.zone
+  zone      = data.ibm_is_zones.regional_zones[0]
   keys      = [data.ibm_is_ssh_key.linux_key.id]
-  user_data = templatefile("${path.module}/installer.sh", { consul_version = var.consul_version, acl_token = var.acl_token, zone = var.zone, encrypt_key = var.encrypt_key, ips = element(split(",", ibm_is_instance.consul_instance[*].primary_network_interface[0].primary_ipv4_address), count.index) })
+  user_data = templatefile("${path.module}/installer.sh", { consul_version = var.consul_version, acl_token = var.acl_token, zone = var.zone, encrypt_key = var.encrypt_key, vpc_name = var.vpc_name, zone = data.ibm_is_zones.regional_zones[0] })
 }
 
 
@@ -24,7 +24,7 @@ resource "ibm_dns_resource_record" "consul_server_dns" {
   instance_id = var.dns_instance_id
   zone_id     = var.zone_id
   type        = "A"
-  name        = "c-srv-${count.index + 1}"
+  name        = "consul-server${count.index + 1}"
   rdata       = element(ibm_is_instance.consul_instance[*].primary_network_interface[0].primary_ipv4_address, count.index)
 }
 
@@ -41,7 +41,7 @@ resource "ibm_is_instance" "windows_instance" {
   tags           = ["windows", var.vpc_name, var.zone]
 
   vpc       = data.ibm_is_vpc.us_east_vpc.id
-  zone      = var.zone
+  zone      = data.ibm_is_zones.regional_zones[0]
   keys      = [data.ibm_is_ssh_key.windows_key.id]
   user_data = file("${path.module}/win-installer.yml")
 }

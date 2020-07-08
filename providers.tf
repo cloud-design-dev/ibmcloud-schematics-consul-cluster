@@ -1,4 +1,4 @@
 provider "ibm" {
   generation = 2
-  region     = "us-east"
+  region     = var.region
 }
