@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-hstip=`hostname -I`
 ## Update machine
 DEBIAN_FRONTEND=noninteractive apt -qqy update
 DEBIAN_FRONTEND=noninteractive apt-get -qqy -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' upgrade
@@ -63,7 +62,7 @@ cat >/etc/consul.d/consul.hcl <<EOL
 datacenter = "${zone}"
 data_dir = "/opt/consul"
 encrypt = "${encrypt_key}"
-bind_addr = "${hstip}"
+bind_addr = `hostname -I`
 retry_join = ["consul-server1.us-east.cde", "consul-server2.us-east.cde", "consul-server3.us-east.cde"]
 acl = {
     enabled = true,
