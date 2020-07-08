@@ -64,12 +64,6 @@ variable "consul_version" {
   default     = ""
 }
 
-variable "zone" {
-  description = "VPC zone where resources will be deployed."
-  type        = string
-  default     = ""
-}
-
 variable "acl_token" {
   description = "Token to use for cluster ACL."
   type        = string
