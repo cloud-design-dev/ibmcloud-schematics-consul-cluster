@@ -14,7 +14,7 @@ resource "ibm_is_instance" "consul_instance" {
   vpc       = data.ibm_is_vpc.us_east_vpc.id
   zone      = var.zone
   keys      = [data.ibm_is_ssh_key.linux_key.id]
-  user_data = templatefile("${path.module}/installer.sh", { consul_version = var.consul_version, acl_token = var.acl_token, zone = var.zone, encrypt_key = var.encrypt_key })
+  user_data = templatefile("${path.module}/installer.sh", { consul_version = var.consul_version, acl_token = var.acl_token, zone = var.zone, encrypt_key = var.encrypt_key, ips = element(split(",", ibm_is_instance.consul_instance[*].primary_network_interface[0].primary_ipv4_address), count.index) })
 }
 
 

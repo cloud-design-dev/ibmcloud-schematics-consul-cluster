@@ -62,7 +62,7 @@ cat >/etc/consul.d/consul.hcl <<EOL
 datacenter = "${zone}"
 data_dir = "/opt/consul"
 encrypt = "${encrypt_key}"
-retry_join = ["c-srv-1.us-east.cde", "c-srv-2.us-east.cde", "c-srv-2.us-east.cde"]
+retry_join = ["${ips}"]
 acl = {
     enabled = true,
     default_policy = "allow",
