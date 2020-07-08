@@ -9,7 +9,7 @@ resource "ibm_is_instance" "consul_instance" {
   }
 
   resource_group = data.ibm_resource_group.cde_rg.id
-  tags           = ["consul", var.vpc_name, data.ibm_is_zones.regional_zones[0]]
+  tags           = ["consul", var.vpc_name, data.ibm_is_zones.regional_zones.zones[0]]
 
   vpc       = data.ibm_is_vpc.us_east_vpc.id
   zone      = data.ibm_is_zones.regional_zones.zones[0]
@@ -38,7 +38,7 @@ resource "ibm_is_instance" "windows_instance" {
   }
 
   resource_group = data.ibm_resource_group.cde_rg.id
-  tags           = ["windows", var.vpc_name, var.zone]
+  tags           = ["windows", var.vpc_name, data.ibm_is_zones.regional_zones.zones[0]]
 
   vpc       = data.ibm_is_vpc.us_east_vpc.id
   zone      = data.ibm_is_zones.regional_zones.zones[0]
