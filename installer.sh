@@ -3,7 +3,7 @@
 ## Update machine
 DEBIAN_FRONTEND=noninteractive apt -qqy update
 DEBIAN_FRONTEND=noninteractive apt-get -qqy -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' upgrade
-DEBIAN_FRONTEND=noninteractive apt-get -qqy -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' install unzip curl git jq 
+DEBIAN_FRONTEND=noninteractive apt-get -qqy -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' install unzip curl git jq
 
 cat >/etc/netplan/99-custom-dns.yaml <<EOL
 network:
@@ -33,7 +33,7 @@ mkdir --parents /opt/consul
 mkdir --parents /etc/consul.d
 useradd --system --home /etc/consul.d --shell /bin/false consul
 
-## Create systemd service file 
+## Create systemd service file
 cat >/etc/systemd/system/consul.service <<EOL
 [Unit]
 Description="HashiCorp Consul - A service mesh solution"
@@ -59,10 +59,11 @@ EOL
 
 ## Create client and server configuration files
 cat >/etc/consul.d/consul.hcl <<EOL
-datacenter = "${zone}"
+datacenter = "${region}"
 data_dir = "/opt/consul"
 encrypt = "${encrypt_key}"
 bind_addr = "`hostname -I`"
+client_addr = "0.0.0.0"
 retry_join = ["consul-server1.us-east.cde", "consul-server2.us-east.cde", "consul-server3.us-east.cde"]
 acl = {
     enabled = true,
