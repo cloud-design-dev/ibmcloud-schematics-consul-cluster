@@ -72,3 +72,9 @@ variable "region" {
   type        = string
   default     = "us-east"
 }
+
+variable "domain" {
+  description = "Domain to use for Private DNS service"
+  type        = string
+  default     = ""
+}
