@@ -1,11 +1,13 @@
 resource "ibm_is_instance" "consul_instance" {
-  count   = var.instance_count
-  name    = "consul-server${count.index + 1}"
-  image   = data.ibm_is_image.consul_image.id
-  profile = var.default_instance_profile
+  depends_on = [ibm_is_security_group.consul_sg]
+  count      = var.instance_count
+  name       = "consul-server${count.index + 1}"
+  image      = data.ibm_is_image.consul_image.id
+  profile    = var.default_instance_profile
 
   primary_network_interface {
-    subnet = data.ibm_is_vpc.us_east_vpc.subnets[0].id
+    subnet          = data.ibm_is_vpc.us_east_vpc.subnets[0].id
+    security_groups = [ibm_is_security_group.consul_sg.id]
   }
 
   resource_group = data.ibm_resource_group.default_rg.id
@@ -27,4 +29,3 @@ resource "ibm_dns_resource_record" "consul_server_dns" {
   name        = "consul-server${count.index + 1}"
   rdata       = element(ibm_is_instance.consul_instance[*].primary_network_interface[0].primary_ipv4_address, count.index)
 }
-
