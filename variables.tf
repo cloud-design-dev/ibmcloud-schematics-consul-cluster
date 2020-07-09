@@ -10,11 +10,6 @@ variable "consul_image" {
   default     = "ibm-ubuntu-18-04-1-minimal-amd64-2"
 }
 
-variable "windows_image" {
-  description = "Default system image for Windows instance."
-  type        = string
-  default     = "ibm-windows-server-2016-full-standard-amd64-3"
-}
 
 variable "default_instance_profile" {
   description = "Default instance size."
@@ -28,11 +23,7 @@ variable "linux_ssh_key" {
   default     = ""
 }
 
-variable "windows_ssh_key" {
-  description = "VPC ssh key to add to windows compute instance."
-  type        = string
-  default     = ""
-}
+
 
 variable "resource_group_name" {
   description = "Resource group where resources will be deployed."
