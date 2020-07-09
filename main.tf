@@ -8,7 +8,7 @@ resource "ibm_is_instance" "consul_instance" {
     subnet = data.ibm_is_vpc.us_east_vpc.subnets[0].id
   }
 
-  resource_group = data.ibm_resource_group.cde_rg.id
+  resource_group = data.ibm_resource_group.default_rg.id
   tags           = ["consul", var.vpc_name, data.ibm_is_zones.regional_zones.zones[0]]
 
   vpc       = data.ibm_is_vpc.us_east_vpc.id

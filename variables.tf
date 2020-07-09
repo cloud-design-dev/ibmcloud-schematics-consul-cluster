@@ -28,7 +28,7 @@ variable "linux_ssh_key" {
 variable "resource_group_name" {
   description = "Resource group where resources will be deployed."
   type        = string
-  default     = "CDE"
+  default     = "default"
 }
 
 variable "dns_instance_id" {
