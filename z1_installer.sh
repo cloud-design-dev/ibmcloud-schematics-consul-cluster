@@ -64,7 +64,7 @@ data_dir = "/opt/consul"
 encrypt = "${encrypt_key}"
 bind_addr = "`hostname -I`"
 client_addr = "0.0.0.0"
-retry_join = ["cs1.${domain}", "cs2.${domain}", "cs3.${domain}"]
+retry_join = ["z1-cs1.${domain}", "z2-cs2.${domain}", "z2-cs3.${domain}"]
 acl = {
     enabled = true,
     default_policy = "allow",
@@ -77,8 +77,7 @@ EOL
 
 cat >/etc/consul.d/server.hcl <<EOL
 server = true
-bootstrap_expect = 3
-ui = true
+bootstrap_expect = 6
 EOL
 
 
@@ -100,6 +99,6 @@ DEBIAN_FRONTEND=noninteractive apt -qqy install logdna-agent < "/dev/null"
 logdna-agent -k 613b640c3c290be2cf232c489c966a1d
 logdna-agent -s LOGDNA_APIHOST=api.us-south.logging.cloud.ibm.com
 logdna-agent -s LOGDNA_LOGHOST=logs.us-south.logging.cloud.ibm.com
-logdna-agent -t ${vpc_name},${zone}
+logdna-agent -t ${vpc_name},${zone},${region}
 update-rc.d logdna-agent defaults
 /etc/init.d/logdna-agent start
