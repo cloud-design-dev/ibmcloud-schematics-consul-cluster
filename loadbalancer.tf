@@ -9,7 +9,7 @@ resource "ibm_is_lb" "consul_instance_lb" {
 
 
 resource "ibm_is_lb_listener" "consul_instance_listener" {
-  lb         = ibm_is_lb.private_instance_lb.id
+  lb         = ibm_is_lb.consul_instance_lb.id
   port       = "80"
   protocol   = "tcp"
   depends_on = [ibm_is_lb.consul_instance_lb]
@@ -17,7 +17,7 @@ resource "ibm_is_lb_listener" "consul_instance_listener" {
 
 resource "ibm_is_lb_pool" "consul_instance_pool" {
   lb                 = ibm_is_lb.consul_instance_lb.id
-  name               = "${var.vpc_name}-private-instance-pool"
+  name               = "coinsul-pool"
   protocol           = "tcp"
   algorithm          = "round_robin"
   health_delay       = "5"
