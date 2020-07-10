@@ -17,3 +17,7 @@ data "ibm_is_ssh_key" "linux_key" {
 data "ibm_is_zones" "regional_zones" {
   region = var.region
 }
+
+data "ibm_is_subnet" "consul_subnet" {
+  identifier = data.ibm_is_vpc.us_east_vpc.subnets[0].id
+}
