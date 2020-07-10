@@ -2,7 +2,7 @@ resource "ibm_is_lb" "consul_instance_lb" {
   depends_on     = [ibm_is_instance.consul_instance]
   name           = "consul-lb"
   subnets        = [data.ibm_is_vpc.us_east_vpc.subnets[0].id]
-  resource_group = data.ibm_resource_group.default.id
+  resource_group = data.ibm_resource_group.default_rg.id
   type           = "public"
   tags           = [var.vpc_name, "consul"]
 }
